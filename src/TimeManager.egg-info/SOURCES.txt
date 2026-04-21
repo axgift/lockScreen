@@ -1,0 +1,6 @@
+README.md
+setup.py
+src/TimeManager.egg-info/PKG-INFO
+src/TimeManager.egg-info/SOURCES.txt
+src/TimeManager.egg-info/dependency_links.txt
+src/TimeManager.egg-info/top_level.txt

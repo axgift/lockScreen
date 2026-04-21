@@ -1,0 +1,73 @@
+{
+  "admin_password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+  "temp_password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+  "weekly_schedule": {
+    "Monday": [
+      {
+        "start": "11:00",
+        "end": "14:00"
+      },
+      {
+        "start": "15:00",
+        "end": "22:00"
+      }
+    ],
+    "Tuesday": [
+      {
+        "start": "11:00",
+        "end": "22:00"
+      }
+    ],
+    "Wednesday": [
+      {
+        "start": "11:00",
+        "end": "22:00"
+      }
+    ],
+    "Thursday": [
+      {
+        "start": "11:00",
+        "end": "22:00"
+      }
+    ],
+    "Friday": [
+      {
+        "start": "11:00",
+        "end": "22:00"
+      }
+    ],
+    "Saturday": [
+      {
+        "start": "11:00",
+        "end": "23:00"
+      }
+    ],
+    "Sunday": [
+      {
+        "start": "12:00",
+        "end": "14:18"
+      },
+      {
+        "start": "15:00",
+        "end": "22:00"
+      }
+    ]
+  },
+  "temp_unlock_duration": 5,
+  "warning_before_lock": 2,
+  "whitelist_apps": [
+    "DreamAutoWorkflow.exe"
+  ],
+  "emergency_question": "你的出生年份是？",
+  "emergency_answer": "ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d",
+  "usage_stats": {
+    "2026-04-19": 86.20189946666666
+  },
+  "hotkeys": {
+    "show_window": "ctrl+alt+a",
+    "hide_window": "ctrl+alt+h",
+    "immediate_lock": "ctrl+alt+l",
+    "quit_program": "ctrl+alt+e"
+  },
+  "autostart_enabled": false
+}
