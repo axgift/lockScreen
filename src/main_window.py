@@ -97,6 +97,7 @@ class MainWindow:
         self.setup_stats_tab(notebook)
         self.setup_whitelist_tab(notebook)
         self.setup_system_tab(notebook)
+        self.setup_about_tab(notebook)
 
         bottom_frame = tk.Frame(self.root, bg='#f0f0f0', height=60)
         bottom_frame.pack(fill='x', side='bottom')
@@ -116,7 +117,21 @@ class MainWindow:
             pady=8,
             cursor='hand2'
         )
-        close_btn.pack()
+        close_btn.pack(side='left', padx=5)
+
+        exit_btn = tk.Button(
+            btn_frame,
+            text="退出软件",
+            command=self.quit_program_from_button,
+            bg='#3498db',
+            fg='white',
+            font=('Arial', 11),
+            relief='flat',
+            padx=20,
+            pady=8,
+            cursor='hand2'
+        )
+        exit_btn.pack(side='left', padx=5)
 
     def close_main_window(self):
         logger.info("关闭主窗口，程序继续运行...")
@@ -693,6 +708,120 @@ class MainWindow:
             logger.error(f"保存系统设置失败: {e}")
             messagebox.showerror("错误", f"保存设置时出错: {e}")
 
+    def setup_about_tab(self, notebook):
+        frame = ttk.Frame(notebook)
+        notebook.add(frame, text='关于我')
+
+        canvas = tk.Canvas(frame, highlightthickness=0)
+        scrollbar = ttk.Scrollbar(frame, orient="vertical", command=canvas.yview)
+        scrollable_frame = tk.Frame(canvas, bg='#f0f0f0')
+
+        scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+        )
+
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+
+        def on_mousewheel(event):
+            canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+
+        canvas.bind("<MouseWheel>", on_mousewheel)
+
+        def bind_mousewheel_to_widget(widget):
+            widget.bind("<MouseWheel>", on_mousewheel)
+            for child in widget.winfo_children():
+                bind_mousewheel_to_widget(child)
+
+        app_info_group = ttk.LabelFrame(scrollable_frame, text="软件信息", padding=20)
+        app_info_group.pack(fill='x', pady=(10, 10), padx=20)
+
+        app_title = tk.Label(app_info_group, text="小灵控制屏幕保护程序", 
+                            font=('Arial', 16, 'bold'), bg='#f0f0f0')
+        app_title.pack(pady=(0, 10))
+
+        version_label = tk.Label(app_info_group, text="版本: 1.0", 
+                               font=('Arial', 12), bg='#f0f0f0')
+        version_label.pack(pady=5)
+
+        desc_label = tk.Label(app_info_group, 
+                            text="一个基于 Python 的智能时间管理桌面应用，\n用于管理和限制电脑使用时间，帮助用户养成健康的使用习惯。",
+                            font=('Arial', 11), bg='#f0f0f0', justify='left')
+        desc_label.pack(pady=10)
+
+        features_group = ttk.LabelFrame(scrollable_frame, text="主要功能", padding=20)
+        features_group.pack(fill='x', pady=10, padx=20)
+
+        features_text = """• 📅 灵活的时间设置：为周一至周日分别设置可用时间段
+• ⏰ 实时监控：后台自动检查时间并执行锁定
+• 🔐 双重密码保护：管理员密码和临时退出密码
+• 🚀 开机自启动：随Windows自动启动
+• ⏳ 临时解锁：可设置临时解锁时间限制
+• ⚠️ 锁定前提醒：锁定前弹出警告
+• 🆘 紧急解锁：安全问题/答案验证解锁
+• 📊 使用统计：记录每日使用时间
+• ✅ 白名单应用：锁定时间仍可使用指定应用"""
+
+        features_label = tk.Label(features_group, text=features_text,
+                                font=('Arial', 11), bg='#f0f0f0', justify='left')
+        features_label.pack(anchor='w')
+
+        shortcuts_group = ttk.LabelFrame(scrollable_frame, text="快捷键", padding=20)
+        shortcuts_group.pack(fill='x', pady=10, padx=20)
+
+        shortcuts_text = """• Ctrl+Alt+A - 显示/打开设置窗口
+• Ctrl+Alt+H - 隐藏窗口
+• Ctrl+Alt+L - 立即锁定屏幕
+• Ctrl+Alt+E - 退出程序（需要密码）
+• Ctrl+Alt+Shift+Q - 强制退出"""
+
+        shortcuts_label = tk.Label(shortcuts_group, text=shortcuts_text,
+                                font=('Arial', 11), bg='#f0f0f0', justify='left')
+        shortcuts_label.pack(anchor='w')
+
+        dev_group = ttk.LabelFrame(scrollable_frame, text="开发团队", padding=20)
+        dev_group.pack(fill='x', pady=10, padx=20)
+
+        dev_text = """开发网站：https://autolist.top
+        
+商务自动化助手 - 自动化软件销售平台
+
+我们提供专业的电商自动化工具、咨询服务和培训课程，帮助企业提升效率，降低成本，实现业务增长。
+
+核心服务：
+• 🌍 国际贸易自动化工具
+• 🔄 n8n工作流服务  
+• 🎨 电商美工自动化工具
+
+核心优势：
+• ⚡ 高效自动化
+• 🎯 精准定制
+• 🔒 安全可靠
+• 📈 业务增长"""
+
+        dev_label = tk.Label(dev_group, text=dev_text,
+                            font=('Arial', 11), bg='#f0f0f0', justify='left')
+        dev_label.pack(anchor='w')
+
+        copyright_group = ttk.LabelFrame(scrollable_frame, text="版权信息", padding=20)
+        copyright_group.pack(fill='x', pady=10, padx=20)
+
+        copyright_text = """© 2024 商务自动化助手
+        
+许可证：MIT License
+
+技术支持：如有问题，请查看控制台输出的调试信息或检查配置文件是否正常。"""
+
+        copyright_label = tk.Label(copyright_group, text=copyright_text,
+                                font=('Arial', 11), bg='#f0f0f0', justify='left')
+        copyright_label.pack(anchor='w')
+
+        bind_mousewheel_to_widget(scrollable_frame)
+
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+
     def setup_time_check(self):
         self.check_and_lock()
         self.root.after(10000, self.setup_time_check)
@@ -854,6 +983,9 @@ class MainWindow:
 
         except Exception as e:
             logger.error(f"退出程序出错: {e}")
+
+    def quit_program_from_button(self):
+        self.quit_program_from_hotkey()
 
     def safe_exit(self):
         logger.info("开始安全退出...")
